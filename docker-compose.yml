@@ -8,15 +8,11 @@ services:
         volumes:
             - ./conf.d:/etc/nginx/conf.d
             - ./app:/var/www/html
-        networks:
-            - net-lnmp
     
     php:
         build: php
         volumes:
             - ./app:/var/www/html
-        networks:
-            - net-lnmp
   
     maraidb:
         image: mariadb:10.6.0
@@ -24,8 +20,7 @@ services:
             MYSQL_ROOT_PASSWORD: password
         volumes:
             - ./mariadb:/var/lib/mysql 
-        networks:
-            - net-lnmp
+
 
     phpmyadmin:
         image: phpmyadmin:5.1.0
@@ -34,17 +29,8 @@ services:
         environment:
             PMA_HOST: maraidb
             PMA_PORT: 3306
-        networks:
-            - net-lnmp
 
     redis:
         image: redis:6.2-alpine
         ports:
             - 6379:6379
-        networks:
-            - net-lnmp
-
-
-networks: 
-    net-lnmp:
-        external: true
